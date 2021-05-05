@@ -1,6 +1,8 @@
 package gitlab
 
 import (
+	"strings"
+
 	"github.com/gookit/color"
 	"github.com/obcode/glabs/config"
 )
@@ -64,8 +66,14 @@ func (c *Client) CheckCourse(cfg *config.CourseConfig) bool {
 func (c *Client) checkStudent(name, prefix string) bool {
 	user, err := c.getUser(name)
 	if err != nil {
-		color.Red.Printf("    # %s, error: %v\n", name, err)
-		return false
+		if strings.Contains(name, "@") {
+			color.Yellow.Printf("%s     - %s # Inviting via email\n", prefix, name)
+			return true
+		} else {
+			color.Red.Printf("    # %s, error: %v\n", name, err)
+			return false
+		}
+
 	}
 	color.Cyan.Printf("%s     - %s", prefix, user.Username)
 	color.Green.Printf(" # %s\n", user.Name)

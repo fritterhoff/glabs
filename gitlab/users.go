@@ -11,7 +11,7 @@ import (
 
 func (c *Client) getUser(username string) (*gitlab.User, error) {
 	u := &gitlab.ListUsersOptions{
-		Username: gitlab.String(username),
+		Search: gitlab.String(username),
 	}
 	users, _, err := c.Users.ListUsers(u)
 	if err != nil {

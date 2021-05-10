@@ -254,7 +254,8 @@ func (c *Client) generatePerStudent(assignmentCfg *config.AssignmentConfig, assi
 	}
 
 	for _, student := range assignmentCfg.Students {
-		c.generate(assignmentCfg, assignmentGroupID, assignmentCfg.Name+"-"+student, []string{student}, starterrepo)
+		name := assignmentCfg.Name + "-" + assignmentCfg.EscapeUserName(student)
+		c.generate(assignmentCfg, assignmentGroupID, name, []string{student}, starterrepo)
 	}
 }
 
